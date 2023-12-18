@@ -1,4 +1,2 @@
 streamlit_webrtc
 opencv-python-headless
-pandas 
-numpy
