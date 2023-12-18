@@ -85,7 +85,7 @@ page = st.sidebar.radio('Go to', ('Home', 'Events', 'Projects', 'About Us'))
 
 if page == 'Home':
     st.header('Home')
-    st.write('This is the home page. Check out our latest updates and activities here.')
+    st.write('Check out our latest updates and activities here.')
 
     st.subheader('Interesting Machine Learning Fact/Tip of the Day')
     display_random_fact()
