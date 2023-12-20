@@ -9,46 +9,49 @@ import mediapipe as mp
 def main_face_mesh_detection():
     st.title("Face Mesh Detection with OpenCV and MediaPipe")
 
-    face = mp.solutions.face_mesh.FaceMesh(
-        static_image_mode=True, min_tracking_confidence=0.6, min_detection_confidence=0.6
-    )
-    draw = mp.solutions.drawing_utils
+    mp_face_mesh = mp.solutions.face_mesh
+    face_mesh = mp_face_mesh.FaceMesh()
+    drawing = mp.solutions.drawing_utils
+    spec = drawing.DrawingSpec(thickness=1, circle_radius=1)
 
-    landmarks_list = []
-    video = cv2.VideoCapture(0)
-    stframe = st.empty()
+    def detect_face_mesh():
+        landmarks_list = []
+        video = cv2.VideoCapture(0)
+        stframe = st.empty()
 
-    stop_flag = False
-    stop_button = st.button("Stop Detection")
+        stop_flag = False
+        stop_button = st.button("Stop Detection")
 
-    while not stop_flag:
-        _, frame = video.read()
-        rgb = cv2.cvtColor(frame, cv2.COLOR_BGR2RGB)
-        op = face.process(rgb)
+        while not stop_flag:
+            _, frame = video.read()
+            rgb = cv2.cvtColor(frame, cv2.COLOR_BGR2RGB)
+            op = face_mesh.process(rgb)
 
-        if op.multi_face_landmarks:
-            for face_landmarks in op.multi_face_landmarks:
-                for idx, landmark in enumerate(face_landmarks.landmark):
-                    height, width, _ = frame.shape
-                    x = int(landmark.x * width)
-                    y = int(landmark.y * height)
-                    landmarks_list.append((x, y))
+            if op.multi_face_landmarks:
+                for face_landmarks in op.multi_face_landmarks:
+                    for idx, landmark in enumerate(face_landmarks.landmark):
+                        height, width, _ = frame.shape
+                        x = int(landmark.x * width)
+                        y = int(landmark.y * height)
+                        landmarks_list.append((x, y))
 
-                draw.draw_landmarks(
-                    image=frame,
-                    landmark_list=face_landmarks,
-                    connections=mp.solutions.face_mesh.FACEMESH_TESSELATION,
-                    landmark_drawing_spec=draw.DrawingSpec(color=(0, 255, 0), thickness=1, circle_radius=1),
-                    connection_drawing_spec=draw.DrawingSpec(color=(0, 255, 0), thickness=1),
-                )
+                    drawing.draw_landmarks(
+                        image=frame,
+                        landmark_list=face_landmarks,
+                        connections=mp_face_mesh.FACEMESH_TESSELATION,
+                        landmark_drawing_spec=spec,
+                        connection_drawing_spec=spec,
+                    )
 
-        stframe.image(frame, channels="BGR", use_column_width=True)
+            stframe.image(frame, channels="BGR", use_column_width=True)
 
-        if stop_button:
-            stop_flag = True
+            if stop_button:
+                stop_flag = True
 
-    video.release()
-    cv2.destroyAllWindows()
+        video.release()
+        cv2.destroyAllWindows()
+
+    detect_face_mesh()
 
 class ObjectDetector(VideoTransformerBase):
     def __init__(self):
