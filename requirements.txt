@@ -1,2 +1,5 @@
 streamlit_webrtc
 opencv-python-headless
+google.generativeai
+google-api-python-client
+rouge_score
