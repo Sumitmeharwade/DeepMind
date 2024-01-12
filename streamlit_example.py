@@ -83,7 +83,7 @@ def face_mesh_project_page():
                 )
 
                 window_image = addFrame(frame, mesh_window)
-                stframe.image(cv2.cvtColor(window_image, cv2.COLOR_BGR2RGB), channels="BGR")
+                stframe.image(cv2.cvtColor(window_image, cv2.COLOR_BGR2RGB), channels="RGB")
 
             key = cv2.waitKey(1)
             if key == 27:  # 'esc' key
@@ -117,7 +117,7 @@ class PalmAI(object):
 
     def GenerateSummary(self):
         palm.configure(api_key=GOOGLE_API_KEY)
-        request = f"from the given comments summarize what the people are talking about. Also, give the general tone of the comments. Give the output within 500 words: {self.text_content}"
+        request = f"from the given comments summarize what the people are talking about. Also, give the general tone of the comments. Give the output within 1000 words: {self.text_content}"
         response = palm.generate_text(prompt=request)
         self.generated_summary = response.result
 
@@ -236,7 +236,7 @@ def main_face_mesh_detection():
                         connection_drawing_spec=spec,
                     )
 
-            stframe.image(frame, channels="BGR", use_column_width=True)
+            stframe.image(frame, channels="RGB", use_column_width=True)
 
             if stop_button:
                 stop_flag = True
@@ -342,7 +342,7 @@ elif page == 'Events':
             'title': 'Workshop on basics of ML and tools required',
             'date': 'Will be informed later',
             'image': 'image.jpg',
-            'description': 'Join us for an in-depth exploration of neural networks.'
+            'description': 'Join us for interactive sessions.'
         }
         # ,
         # {
@@ -406,10 +406,10 @@ elif page == 'About Us':
 
     st.subheader('Lead')
     lead_info = {
-        'name': 'Virat Kohli',
+        'name': 'Ravishankar',
         'position': 'President',
         'bio': 'An experienced machine learning enthusiast leading the club towards innovation.',
-        'image': 'image.jpg'  # Replace with the lead's image filename
+        'image': 'ravvi.jpeg'  # Replace with the lead's image filename
     }
     col1, col2 = st.columns([1, 4])
     with col1:
@@ -422,8 +422,10 @@ elif page == 'About Us':
 
     st.subheader('Tech Team')
     tech_team_members = [
-        {'name': 'Virat Kohli', 'position': 'Software Engineer', 'image': 'image.jpg'},
-        {'name': 'Virat Kohli', 'position': 'Data Scientist', 'image': 'image.jpg'},
+        {'name': 'Kushalgouda Patil', 'position': 'Tech lead', 'image': 'kush.jpeg'},
+        {'name': 'Sumit Meharwade', 'position': '', 'image': 'sumit.jpg'},
+        {'name': 'Neelkant', 'position': '', 'image': 'neel.jpg'},
+        {'name': 'Sushant', 'position': '', 'image': 'sush.jpeg'},
         # Add more tech team members as needed
     ]
     col_count = 0
@@ -438,8 +440,8 @@ elif page == 'About Us':
 
     st.subheader('PR/Media Team')
     pr_media_team_members = [
-        {'name': 'Virat Kohli', 'position': 'Public Relations Manager', 'image': 'image.jpg'},
-        {'name': 'Virat Kohli', 'position': 'Social Media Coordinator', 'image': 'image.jpg'},
+        {'name': 'Pratiksha Tigadi', 'position': 'Public Relations Manager', 'image': 'image.jpg'},
+        {'name': 'Yashasvi', 'position': 'Coordinator', 'image': 'image.jpg'},
         # Add more PR/Media team members as needed
     ]
     col_count = 0
